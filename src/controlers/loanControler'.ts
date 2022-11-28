@@ -1,6 +1,8 @@
 import { Loans } from "@prisma/client";
+import { count } from "console";
 import { Request, Response } from "express";
 import { prisma } from "../config/DB";
+import { paramsType } from "../zodSchema/zodSchema";
 
 // get all laons
 export const getAllLoan = async (req: Request, res: Response) => {
@@ -35,15 +37,20 @@ export const addNewLoan = async (req: Request, res: Response) => {
 // return the lended books by user ID
 export const lendBooks = async (req: Request, res: Response) => {
   try {
-    const userId = req.params;
+    const {userid} = req.params as paramsType;
 
-    const getUserBooks = await prisma.books.findMany({
+    const getUserBooks = await prisma.users.findUnique({
+      //   select: {
+      //     loan: {
+      //       select: {
+      //         userId: true,
+      //       },
+      //     },
+      //   },
+      where: {id:userid},
       select: {
-        loan: {
-          select: {
-            userId: true,
-          },
-        },
+        username: true,
+        loan: true,
       },
     });
 

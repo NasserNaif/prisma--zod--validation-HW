@@ -28,3 +28,11 @@ export const addLoanSchema = z.object({
     user_id: z.string({ required_error: "user id is required !" }),
   }),
 });
+
+export const paramSchema = z.object({
+  params: z.object({
+    userid: z.string(),
+  }),
+});
+
+export type paramsType = z.infer<typeof paramSchema>['params'];
