@@ -37,7 +37,7 @@ export const addNewLoan = async (req: Request, res: Response) => {
 // return the lended books by user ID
 export const lendBooks = async (req: Request, res: Response) => {
   try {
-    const {userid} = req.params as paramsType;
+    const { userid } = req.params as paramsType;
 
     const getUserBooks = await prisma.users.findUnique({
       //   select: {
@@ -47,7 +47,7 @@ export const lendBooks = async (req: Request, res: Response) => {
       //       },
       //     },
       //   },
-      where: {id:userid},
+      where: { id: userid },
       select: {
         username: true,
         loan: true,
