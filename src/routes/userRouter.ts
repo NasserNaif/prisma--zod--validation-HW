@@ -1,11 +1,12 @@
 import express from "express";
-import { getUsers, postNewUser } from "../controlers/userControler";
+import { getUsers, logInUser, registerUser } from "../controlers/userControler";
 import validate from "../middleware/validate";
 import { addUserSchema } from "../zodSchema/zodSchema";
 
 const userRouter = express.Router();
 
 userRouter.get(`/`, getUsers);
-userRouter.post(`/`, validate(addUserSchema), postNewUser);
+userRouter.post(`/rigester`, validate(addUserSchema), registerUser);
+userRouter.post(`/login`, validate(addUserSchema), logInUser);
 
 export default userRouter;
