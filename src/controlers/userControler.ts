@@ -2,6 +2,7 @@ import { Users } from "@prisma/client";
 import { Response, Request } from "express";
 import { prisma } from "../config/DB";
 import * as argon2 from "argon2";
+import * as jwt from "jsonwebtoken";
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -47,6 +48,8 @@ export const logInUser = async (req: Request, res: Response) => {
         message: "wrong username OR password ",
       });
     }
+
+
     const isValidPassword = await argon2.verify(
       isValidUsername.password,
       password
@@ -58,8 +61,13 @@ export const logInUser = async (req: Request, res: Response) => {
       });
     }
 
+    const token = jwt.sign(
+      { id: isValidUsername.id, username: isValidUsername.username },
+      process.env.JWT_SECRET as string
+    );
     return res.status(200).json({
-      message: "Welcome Back " + username,
+      message: "Welcome Back ",
+      token,
     });
   } catch (error) {
     console.log(error);

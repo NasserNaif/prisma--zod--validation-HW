@@ -3,6 +3,7 @@ import { connectDB } from "./config/DB";
 import bookRouter from "./routes/bookRoutre";
 import loanRouter from "./routes/loanRouter";
 import userRouter from "./routes/userRouter";
+import "dotenv/config";
 
 const app = express();
 
